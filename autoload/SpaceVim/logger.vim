@@ -10,9 +10,12 @@ if has('nvim-0.5.0')
   ""
   " write message to SpaceVim runtime log with `info` level.
   function! SpaceVim#logger#info(msg) abort
-    lua require("spacevim.logger").info(
-          \ require("spacevim").eval("a:msg")
-          \ )
+    " lua require("spacevim.logger").info(
+    "       \ require("spacevim").eval("a:msg")
+    "       \ )
+    if has('nvim')
+      call nvim_notify(a:msg, luaeval('vim.log.levels.INFO'), {})
+    endif
   endfunction
   ""
   " write warning {msg} to spacevim runtime log.
@@ -21,27 +24,36 @@ if has('nvim-0.5.0')
   " if the second argument is given, and is `0` or false, the warning msg
   " will be printed to screen.
   function! SpaceVim#logger#warn(msg, ...) abort
-    let issilent = get(a:000, 0, 1)
-    lua require("spacevim.logger").warn(
-          \ require("spacevim").eval("a:msg"),
-          \ require("spacevim").eval("issilent")
-          \ )
+    " let issilent = get(a:000, 0, 1)
+    " lua require("spacevim.logger").warn(
+    "       \ require("spacevim").eval("a:msg"),
+    "       \ require("spacevim").eval("issilent")
+    "       \ )
+    if has('nvim')
+      call nvim_notify(a:msg, luaeval('vim.log.levels.WARN'), {})
+    endif
   endfunction
 
   ""
   " write error message to spacevim runtime log.
   function! SpaceVim#logger#error(msg) abort
-    lua require("spacevim.logger").error(
-          \ require("spacevim").eval("a:msg")
-          \ )
+    " lua require("spacevim.logger").error(
+    "       \ require("spacevim").eval("a:msg")
+    "       \ )
+    if has('nvim')
+      call nvim_notify(a:msg, luaeval('vim.log.levels.ERROR'), {})
+    endif
   endfunction
 
   ""
   " write debug message to spacevim runtime log.
   function! SpaceVim#logger#debug(msg) abort
-    lua require("spacevim.logger").debug(
-          \ require("spacevim").eval("a:msg")
-          \ )
+    " lua require("spacevim.logger").debug(
+    "       \ require("spacevim").eval("a:msg")
+    "       \ )
+    if has('nvim')
+      call nvim_notify(a:msg, luaeval('vim.log.levels.DEBUG'), {})
+    endif
   endfunction
   ""
   " This a a function to view the spacevim runtime log. same as
